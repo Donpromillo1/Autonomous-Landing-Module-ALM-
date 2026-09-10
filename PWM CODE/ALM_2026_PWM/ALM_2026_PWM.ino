@@ -50,11 +50,11 @@ void loop()
       if (upButton == HIGH)
       {
         Serial.println("Knopf 1 gedrückt -- ALM Start-kommando gesendet!");
-        for (pos = 100; pos <= 179; pos += 1) { // goes from 150 degrees to 180 degrees
+        for (pos = 100; pos <= 179; pos += 1) {
         // in steps of 1 degree
-        myservo.write(pos);              // tell servo to go to position in variable 'pos'
+        myservo.write(pos);
         Serial.println(pos);
-        delay(150);                       // waits 15 ms for the servo to reach the position
+        delay(150);
         }
         Serial.println("ALM Start-kommando durchgeführt");
       }
@@ -64,14 +64,13 @@ void loop()
   {
     if (stopButton == HIGH)
     {
-      Serial.println("Knopf 3 gedrückt -- ALM Lande-kommando gesendet!");
-      //for (pos != 0; pos <= 100; pos -= 1) { // goes from 180 degrees to 0 degrees
+      Serial.println("Knopf 2 gedrückt -- ALM Lande-kommando gesendet!");
       // darf nicht 0 sein wegen ESC und unsigned integer
-      for (int i = 1; i < 120; i += 1){
+      for (int i = 1; i < 151; i += 1){ // lt. NW service abbruptes landen verhindern // 151 mit pos tauschen?
         pos -= 1;
-        myservo.write(pos);              // tell servo to go to position in variable 'pos'
+        myservo.write(pos);
         Serial.println(pos);
-          delay(150);                       // waits 15 ms for the servo to reach the position
+          delay(150);
        
         if (pos <= 100) // Motoren abstellen
         {
@@ -89,13 +88,13 @@ void loop()
   {
     if (downButton == HIGH && pos >= 150)
     {
-      Serial.println("Knopf 3 gedrückt -- ALM Lande-kommando gesendet!");
-      for (pos = 180; pos >= 150; pos -= 1) { // goes from 180 degrees to 0 degrees
-        myservo.write(pos);              // tell servo to go to position in variable 'pos'
+      Serial.println("Knopf 3 gedrückt -- ALM Sink-kommando gesendet!");
+      for (pos = 180; pos >= 150; pos -= 1) {
+        myservo.write(pos);
         Serial.println(pos);
-        delay(150);                       // waits 15 ms for the servo to reach the position
+        delay(150);
       }
-      Serial.println("ALM Lande-kommando durchgeführt");
+      Serial.println("ALM Sink-kommando durchgeführt");
     }
   }
 }
